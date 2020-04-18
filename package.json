@@ -1,0 +1,14 @@
+{
+  "name": "e-shop",
+  "version": "1.0.0",
+  "description": "An e-shop so people can view and buy products.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bikin Maharjan",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
