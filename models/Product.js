@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -26,7 +27,7 @@ const ProductSchema = new mongoose.Schema({
   averageRating: {
     type: Number,
     min: [1, 'Rating must be at least 1'],
-    max: [10, 'Rating can not be more than 10'],
+    max: [5, 'Rating can not be more than 5'],
   },
   cost: {
     type: Number,
@@ -39,6 +40,11 @@ const ProductSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+//Create product slug from the name
+ProductSchema.pre('save', function () {
+  this.slug = slugify(this.name, { lower: true });
 });
 
 module.exports = mongoose.model('Products', ProductSchema);
