@@ -31,6 +31,10 @@ app.use(fileuplod());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Mount Routers
+app.get('/', (req, res) => {
+  res.send('Site under Development');
+});
+
 app.use('/api/v1/products', products);
 
 //Call Error Handler
