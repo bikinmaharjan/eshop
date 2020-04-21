@@ -9,9 +9,15 @@ const {
   productPhotoUpload,
 } = require('../controllers/products');
 
+const Product = require('../models/Product');
+const advancedResults = require('../middlewares/advancedResults');
+
 const router = express.Router();
 
-router.route('/').get(getProducts).post(createProduct);
+router
+  .route('/')
+  .get(advancedResults(Product), getProducts)
+  .post(createProduct);
 
 router.route('/:id').get(getProduct).put(updateProduct).delete(deleteProduct);
 
