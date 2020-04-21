@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const fileuplod = require('express-fileupload');
 const connectDB = require('./config/db');
 const errorHandler = require('./middlewares/error');
+const cors = require('cors');
 
 //Load config files
 dotenv.config({ path: './config/config.env' });
@@ -15,6 +16,8 @@ connectDB();
 //Route Files
 const products = require('./routes/products');
 const app = express();
+
+app.use(cors());
 
 //Body parser
 app.use(express.json());
