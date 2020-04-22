@@ -14,13 +14,19 @@ const advancedResults = require('../middlewares/advancedResults');
 
 const router = express.Router();
 
+const { protect } = require('../middlewares/auth');
+
 router
   .route('/')
   .get(advancedResults(Product), getProducts)
-  .post(createProduct);
+  .post(protect, createProduct);
 
-router.route('/:id').get(getProduct).put(updateProduct).delete(deleteProduct);
+router
+  .route('/:id')
+  .get(getProduct)
+  .put(protect, updateProduct)
+  .delete(protect, deleteProduct);
 
-router.route('/:id/photo').put(productPhotoUpload);
+router.route('/:id/photo').put(protect, productPhotoUpload);
 
 module.exports = router;

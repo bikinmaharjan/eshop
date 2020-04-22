@@ -6,6 +6,7 @@ const fileuplod = require('express-fileupload');
 const connectDB = require('./config/db');
 const errorHandler = require('./middlewares/error');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 //Load config files
 dotenv.config({ path: './config/config.env' });
@@ -15,12 +16,18 @@ connectDB();
 
 //Route Files
 const products = require('./routes/products');
+const auth = require('./routes/auth');
+
+//Initialize app
 const app = express();
 
 app.use(cors());
 
 //Body parser
 app.use(express.json());
+
+//Cookie parser
+app.use(cookieParser());
 
 //DEV logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -39,6 +46,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/products', products);
+app.use('/api/v1/auth', auth);
 
 //Call Error Handler
 app.use(errorHandler);
