@@ -32,6 +32,17 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/products
 // @access  Private
 exports.createProduct = asyncHandler(async (req, res, next) => {
+  //Add user to req.body
+  req.body.user = req.user.id;
+
+  //Check for owner's products
+  const advertisedProduct = await Product.findOne({ user: req.user.id });
+
+  //If the user is not an admin, they can only add 20 products\
+  // if (advertisedProduct && req.user.role !== 'admin') {
+  //   return next(new ErrorResponse(`The user with id ${req.user.id} already has 20 products`))
+  // }
+
   const product = await Product.create(req.body);
 
   res.status(201).json({
@@ -45,16 +56,28 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/products/:id
 // @access  Private
 exports.updateProduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(
       new ErrorResponse(`Product not found with id of ${req.params.id}`, 404)
     );
   }
+
+  //Make sure user is the owner of the product or Admin
+  if (product.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to update this product`,
+        401
+      )
+    );
+  }
+
+  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   res.status(200).json({
     success: true,
@@ -67,13 +90,25 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/products/:id
 // @access  Private
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
+  const product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(
       new ErrorResponse(`Product not found with id of ${req.params.id}`, 404)
     );
   }
+
+  //Make sure user is the owner of the product or Admin
+  if (product.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to delete this product`,
+        401
+      )
+    );
+  }
+
+  product.remove();
 
   res.status(200).json({
     success: true,
@@ -90,6 +125,16 @@ exports.productPhotoUpload = asyncHandler(async (req, res, next) => {
   if (!product) {
     return next(
       new ErrorResponse(`Product not found with id of ${req.params.id}`, 404)
+    );
+  }
+
+  //Make sure user is the owner of the product or Admin
+  if (product.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to update this product`,
+        401
+      )
     );
   }
 

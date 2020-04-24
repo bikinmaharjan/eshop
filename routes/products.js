@@ -14,19 +14,21 @@ const advancedResults = require('../middlewares/advancedResults');
 
 const router = express.Router();
 
-const { protect } = require('../middlewares/auth');
+const { protect, authorize } = require('../middlewares/auth');
 
 router
   .route('/')
   .get(advancedResults(Product), getProducts)
-  .post(protect, createProduct);
+  .post(protect, authorize('owner', 'admin'), createProduct);
 
 router
   .route('/:id')
   .get(getProduct)
-  .put(protect, updateProduct)
-  .delete(protect, deleteProduct);
+  .put(protect, authorize('owner', 'admin'), updateProduct)
+  .delete(protect, authorize('owner', 'admin'), deleteProduct);
 
-router.route('/:id/photo').put(protect, productPhotoUpload);
+router
+  .route('/:id/photo')
+  .put(protect, authorize('owner', 'admin'), productPhotoUpload);
 
 module.exports = router;
