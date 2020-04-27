@@ -52,5 +52,3 @@ exports.authorize = (...roles) => {
     next();
   };
 };
-
-//Only allow the user to delete their products
