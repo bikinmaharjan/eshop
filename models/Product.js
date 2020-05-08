@@ -52,4 +52,4 @@ ProductSchema.pre('save', function () {
   this.slug = slugify(this.name, { lower: true });
 });
 
-module.exports = mongoose.model('Products', ProductSchema);
+module.exports = mongoose.model('Product', ProductSchema);
