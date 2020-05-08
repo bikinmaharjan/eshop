@@ -10,11 +10,18 @@ const {
 } = require('../controllers/products');
 
 const Product = require('../models/Product');
+
+//Include other resource routers
+const reviewRouter = require('./reviews');
+
 const advancedResults = require('../middlewares/advancedResults');
 
 const router = express.Router();
 
 const { protect, authorize } = require('../middlewares/auth');
+
+//Reroute into other resource routers
+router.use('/:productId/reviews', reviewRouter);
 
 router
   .route('/')
