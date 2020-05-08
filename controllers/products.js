@@ -2,6 +2,7 @@ const Product = require('../models/Product');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middlewares/async');
 const path = require('path');
+
 // @desc    GET all products
 // @route   GET /api/v1/products
 // @access  Public

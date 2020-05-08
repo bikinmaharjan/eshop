@@ -17,6 +17,7 @@ connectDB();
 //Route Files
 const products = require('./routes/products');
 const auth = require('./routes/auth');
+const users = require('./routes/users');
 
 //Initialize app
 const app = express();
@@ -47,6 +48,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/products', products);
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/users', users);
 
 //Call Error Handler
 app.use(errorHandler);
