@@ -1,0 +1,38 @@
+GET http://localhost:5000/api/v1/products HTTP/1.1
+
+
+###
+
+POST http://localhost:5000/api/v1/auth/login HTTP/1.1
+Content-Type : application/json
+
+{
+  "email": "lilbkmzn@gmail.com",
+  "password": "bikin101"
+}
+
+
+###
+DELETE http://localhost:5000/api/v1/products/5ea2eeb25c3bb67a3a152ae2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYTJlMGRhYjhmNjZjNTk3YmE2ZGFlNSIsImlhdCI6MTU4ODc0NzM1NiwiZXhwIjoxNTkxMzM5MzU2fQ.HWgdGoMR3IoNznp3jRYAeFXM6gOz22HCLH9QKPeGcHM
+
+
+###
+GET http://localhost:5000/api/v1/auth/me HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYTJlMGRhYjhmNjZjNTk3YmE2ZGFlNSIsImlhdCI6MTU4ODc0NzM1NiwiZXhwIjoxNTkxMzM5MzU2fQ.HWgdGoMR3IoNznp3jRYAeFXM6gOz22HCLH9QKPeGcHM
+
+
+###
+POST http://localhost:5000/api/v1/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYTJlMGRhYjhmNjZjNTk3YmE2ZGFlNSIsImlhdCI6MTU4ODc0NzM1NiwiZXhwIjoxNTkxMzM5MzU2fQ.HWgdGoMR3IoNznp3jRYAeFXM6gOz22HCLH9QKPeGcHM
+Content-Type : application/json
+
+{
+	"name" : "Nike Shoes",
+	"description": "Air Max 2020",
+	"category": ["Shoes"],
+	"available": true,
+	"cost": 20000
+}
+
+###
