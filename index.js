@@ -8,6 +8,7 @@ const errorHandler = require('./middlewares/error');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 //Load config files
 dotenv.config({ path: './config/config.env' });
@@ -42,6 +43,9 @@ app.use(fileuplod());
 
 //Sanitize data
 app.use(mongoSanitize());
+
+//Set security headers
+app.use(helmet());
 
 //Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
